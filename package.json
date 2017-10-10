@@ -1,0 +1,23 @@
+{
+  "name": "2048-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "emotion": "^8.0.5",
+    "polished": "^1.7.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-emotion": "^8.0.5",
+    "react-scripts": "1.0.14",
+    "rx-connect": "^0.7.0",
+    "rxjs": "^5.4.3",
+    "socket.io-client": "^2.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
