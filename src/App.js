@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import Game2048 from './2048';
+import GridWorld from './GridWorld';
 import { css, injectGlobal, fontFace } from 'react-emotion';
 import Rx from 'rxjs/Rx';
 import io from 'socket.io-client';
 import { rxConnect } from 'rx-connect';
+import buttonStyle from './buttonStyle';
+
 const socket = io.connect('ws://localhost:8080', { transports: ['websocket'] });
 let obs = Rx.Observable
   .fromEventPattern(h => socket.on('state', h))
   .zip(Rx.Observable.timer(0, 300), x => x)
   .scan((acc, curr) => Object.assign({}, acc, curr), {});
 const subscribe = obs.subscribe(val => console.log(val));
-const ConnectedGame = rxConnect(obs)(Game2048);
+const ConnectedGame = rxConnect(obs)(GridWorld);
 fontFace`
 font-family: 'Oxygen';
 font-style: normal;
@@ -30,7 +32,7 @@ const appStyle = css`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 const Button = 'button';
@@ -39,12 +41,25 @@ class App extends Component {
     return (
       <div className={appStyle}>
         <header>
-          <h1>2048 Maschine</h1>
+          <h1>Gridworld Maschine</h1>
         </header>
-        <Button onClick={() => socket.emit('start')}>Start</Button>
-        <section>
+        <Button className={buttonStyle} onClick={() => socket.emit('start')}>
+          Start
+        </Button>
+        <section
+          style={{
+            minHeight: '346px',
+          }}
+        >
           <ConnectedGame />
         </section>
+        <div
+          style={{
+            marginTop: '40px',
+            width: '40px',
+            border: '1px solid black',
+          }}
+        />
       </div>
     );
   }
